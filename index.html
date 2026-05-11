@@ -1,0 +1,1337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VertiDog Miami | Vertical Hot Dogs</title>
+  <style>
+    :root{
+      --cream:#fbf1df;
+      --paper:#fffaf2;
+      --white:#ffffff;
+      --red:#bd2a18;
+      --red2:#e64522;
+      --orange:#f3973f;
+      --yellow:#f5c64a;
+      --teal:#008f8b;
+      --green:#2c9b5f;
+      --brown:#3d2115;
+      --muted:#7a5d50;
+      --line:#ecd8c4;
+      --shadow:0 18px 50px rgba(61,33,21,.14);
+      --shadow2:0 8px 24px rgba(61,33,21,.10);
+      --radius:26px;
+      --max:1180px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    html, body{
+      width:100%;
+      min-width:0;
+      min-height:100%;
+      overflow-x:hidden;
+      margin:0;
+      padding:0;
+      width:100vw;
+      max-width:100vw;
+    }
+
+    body{
+      margin:0;
+      padding:0;
+      font-family: Arial, Helvetica, sans-serif;
+      color:var(--brown);
+      background:
+        radial-gradient(circle at 15% 8%, rgba(245,198,74,.28), transparent 26%),
+        radial-gradient(circle at 85% 12%, rgba(230,69,34,.18), transparent 28%),
+        linear-gradient(180deg,#fff8ec 0%, var(--cream) 52%, #fff7ec 100%);
+    }
+
+    a{color:inherit}
+    img{max-width:100%}
+
+    .top-strip{
+      display:none;
+    }
+
+    .navbar{
+      position:fixed;
+      top:0;
+      left:0;
+      right:0;
+      z-index:50;
+      background:linear-gradient(180deg, rgba(61,33,21,.44), rgba(61,33,21,0));
+      backdrop-filter:none;
+      border-bottom:0;
+      pointer-events:none;
+    }
+
+    .nav-inner{
+      width:100%;
+      max-width:none;
+      margin:0;
+      padding:14px clamp(16px,3vw,34px);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+      pointer-events:auto;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      text-decoration:none;
+      font-weight:900;
+      font-size:24px;
+      letter-spacing:-.5px;
+      white-space:nowrap;
+      color:#fff;
+      text-shadow:0 2px 10px rgba(0,0,0,.35);
+    }
+
+    .brand-logo{
+      width:46px;
+      height:46px;
+      border-radius:50%;
+      object-fit:cover;
+      background:var(--red);
+      border:2px solid rgba(255,255,255,.9);
+      box-shadow:var(--shadow2);
+    }
+
+    .nav-links{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+
+    .nav-links a{
+      text-decoration:none;
+      font-size:14px;
+      font-weight:800;
+      padding:10px 12px;
+      border-radius:999px;
+      transition:.18s ease;
+      color:#fff;
+      text-shadow:0 2px 10px rgba(0,0,0,.35);
+    }
+
+    .nav-links a:hover{
+      background:rgba(255,255,255,.18);
+      transform:translateY(-1px);
+      box-shadow:none;
+    }
+
+    .nav-links .order-btn{
+      background:var(--red);
+      color:#fff;
+      padding:11px 15px;
+      box-shadow:0 8px 22px rgba(189,42,24,.24);
+      text-shadow:none;
+    }
+
+    .page{
+      width:100vw;
+      max-width:100vw;
+      height:100vh;
+      margin:0;
+      padding:0 0 54px;
+      overflow-y:auto;
+      overflow-x:hidden;
+      scroll-behavior:smooth;
+      -webkit-overflow-scrolling:touch;
+    }
+
+    .page > section:not(.hero),
+    footer{
+      width:100vw;
+      max-width:none;
+      margin-left:calc(50% - 50vw);
+      margin-right:calc(50% - 50vw);
+      padding-left:clamp(18px,4vw,72px);
+      padding-right:clamp(18px,4vw,72px);
+    }
+
+    section[id]{
+      scroll-margin-top:92px;
+    }
+
+    .hero{
+      position:relative;
+      min-height:620px;
+      margin:0 0 32px;
+      border-radius:0;
+      overflow:hidden;
+      box-shadow:none;
+      background:
+        linear-gradient(90deg, rgba(36,18,10,.64) 0%, rgba(36,18,10,.34) 42%, rgba(36,18,10,.08) 78%),
+        url('https://lh3.googleusercontent.com/d/1LLVVksWT-KQdtFVK7FI2lGcxuvOGYM3_=w2400') center 28%/cover no-repeat;
+      display:flex;
+      align-items:flex-end;
+      width:100vw;
+      margin-left:calc(50% - 50vw);
+      margin-right:calc(50% - 50vw);
+    }
+
+    .hero-content{
+      width:100%;
+      padding:clamp(92px,11vw,132px) clamp(22px,6vw,82px) clamp(44px,7vw,82px);
+      color:#fff;
+      background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,.24) 100%);
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.30);
+      padding:10px 15px;
+      border-radius:999px;
+      font-weight:900;
+      margin-bottom:18px;
+      backdrop-filter:blur(8px);
+    }
+
+    h1{
+      margin:0;
+      font-size:clamp(46px,7vw,88px);
+      line-height:.92;
+      letter-spacing:-2.5px;
+      max-width:820px;
+    }
+
+    .hero p{
+      font-size:clamp(17px,2vw,22px);
+      line-height:1.5;
+      max-width:760px;
+      color:rgba(255,255,255,.94);
+      margin:18px 0 0;
+      font-weight:650;
+    }
+
+    .cta-row{display:flex; flex-wrap:wrap; gap:12px; margin-top:24px;}
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      text-decoration:none;
+      border-radius:999px;
+      padding:14px 20px;
+      font-weight:900;
+      border:0;
+      cursor:pointer;
+      transition:.2s ease;
+    }
+    .btn:hover{transform:translateY(-2px)}
+    .btn.primary{background:#fff; color:var(--red); box-shadow:var(--shadow2)}
+    .btn.dark{background:var(--brown); color:#fff; box-shadow:var(--shadow2)}
+    .btn.red{background:var(--red); color:#fff; box-shadow:0 10px 24px rgba(189,42,24,.24)}
+    .btn.yellow{background:var(--yellow); color:var(--brown); box-shadow:0 10px 24px rgba(245,198,74,.24)}
+
+    section{padding:58px 0;}
+
+    .section-head{
+      display:flex;
+      justify-content:flex-start;
+      align-items:flex-start;
+      gap:clamp(16px,2vw,28px);
+      margin-bottom:24px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size:clamp(34px,5vw,62px);
+      line-height:.96;
+      letter-spacing:-1.6px;
+      color:var(--red);
+      flex:0 0 auto;
+      min-width:min(24vw,285px);
+    }
+    .section-head p{
+      margin:10px 0 0;
+      color:var(--muted);
+      max-width:620px;
+      line-height:1.55;
+      font-weight:650;
+      text-align:left;
+    }
+    .section-head.stacked{
+      display:block;
+    }
+    .section-head.stacked h2{
+      min-width:0;
+    }
+    .section-head.stacked p{
+      margin:10px 0 0;
+      max-width:720px;
+    }
+
+    .about-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:20px;
+      align-items:stretch;
+    }
+
+    .story-card{
+      background:var(--white);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:var(--shadow2);
+    }
+    .story-card h3{font-size:30px; margin:0 0 12px; letter-spacing:-.8px;}
+    .story-card p{color:var(--muted); line-height:1.65; font-weight:650; margin:0 0 14px;}
+
+    .feature-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:14px;
+      align-items:start;
+    }
+
+    .about-truck-photo{
+      min-height:0;
+      border-radius:32px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid var(--line);
+      background:#fff;
+      position:relative;
+      display:block;
+      padding:12px;
+    }
+    .about-truck-photo img{
+      width:100%;
+      height:auto;
+      display:block;
+      border-radius:22px;
+      object-fit:contain;
+      background:#fff;
+    }
+    .about-truck-photo::after{
+      content:'VertiDog Truck';
+      position:absolute;
+      left:24px;
+      bottom:24px;
+      background:rgba(255,255,255,.94);
+      color:var(--red);
+      border-radius:999px;
+      padding:9px 14px;
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      box-shadow:0 8px 18px rgba(61,33,21,.12);
+    }
+    .feature{
+      background:linear-gradient(135deg,#fffaf2,#fff3df);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:var(--shadow2);
+      align-self:start;
+      height:auto;
+    }
+    .feature .icon{font-size:32px; margin-bottom:10px;}
+    .feature-img{
+      width:100%;
+      height:150px;
+      object-fit:cover;
+      display:block;
+      border-radius:16px;
+      margin-bottom:12px;
+      background:#f1dfca;
+      box-shadow:0 8px 18px rgba(61,33,21,.08);
+    }
+    .feature-icon-img{
+      width:72px;
+      height:72px;
+      object-fit:contain;
+      display:block;
+      border-radius:0;
+      margin:0;
+      background:transparent;
+      box-shadow:none;
+      flex:0 0 auto;
+      mix-blend-mode:multiply;
+    }
+    .feature-horizontal{
+      display:inline-flex;
+      align-items:flex-start;
+      gap:14px;
+      width:auto;
+      max-width:100%;
+    }
+    .feature-horizontal h4{margin-top:0;}
+    .feature-horizontal > div{min-width:0;}
+    .feature h4{margin:0 0 8px; font-size:20px;}
+    .feature p{margin:0; color:var(--muted); line-height:1.45; font-weight:650; font-size:14px;}
+
+    .menu-nav{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:0 0 22px;
+    }
+    .menu-nav a{
+      text-decoration:none;
+      background:#fff;
+      border:1px solid var(--line);
+      padding:10px 14px;
+      border-radius:999px;
+      font-weight:900;
+      color:var(--brown);
+      box-shadow:var(--shadow2);
+    }
+
+    .promo-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      margin-bottom:26px;
+    }
+    .promo{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      box-shadow:var(--shadow2);
+    }
+    .promo small{
+      display:inline-block;
+      color:#fff;
+      background:var(--red);
+      border-radius:999px;
+      padding:6px 10px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      margin-bottom:10px;
+    }
+    .promo strong{display:block; font-size:24px; line-height:1.12;}
+    .promo p{color:var(--muted); margin:8px 0 0; line-height:1.45; font-weight:650;}
+
+    .chapter-title{
+      margin:34px 0 16px;
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+    .chapter-title span{
+      width:42px; height:42px;
+      display:grid; place-items:center;
+      background:var(--red);
+      color:#fff;
+      border-radius:14px;
+      font-weight:900;
+    }
+    .chapter-title h3{margin:0; font-size:34px; letter-spacing:-1px;}
+
+    .dogs-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:18px;
+    }
+    .dog-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:28px;
+      overflow:hidden;
+      display:grid;
+      grid-template-columns:220px 1fr;
+      box-shadow:var(--shadow2);
+      min-height:245px;
+    }
+    .dog-card img{
+      width:100%; height:100%; object-fit:cover; display:block; background:#f1dfca;
+    }
+    .dog-body{padding:20px; display:flex; flex-direction:column; gap:10px;}
+    .dog-top{display:flex; gap:12px; justify-content:space-between; align-items:flex-start; flex-wrap:wrap;}
+    .dog-top h4{margin:0; font-size:27px; line-height:1.05; letter-spacing:-.7px;}
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:#fff0df;
+      color:var(--red);
+      border:1px solid #f2cfaa;
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:11px;
+      font-weight:900;
+      letter-spacing:.4px;
+      text-transform:uppercase;
+      white-space:nowrap;
+      font-style:normal;
+    }
+    .dog-desc{margin:0; color:var(--muted); line-height:1.5; font-weight:650; font-size:15px;}
+    .sauce-row{display:flex; flex-wrap:wrap; gap:7px;}
+    .sauce-pill{
+      background:#fffaf2;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:13px;
+      font-weight:850;
+    }
+    .price-line{display:flex; flex-wrap:wrap; gap:10px; margin-top:auto; align-items:stretch;}
+    .price-box{
+      background:#fff6e9;
+      border:1px solid #efd5b6;
+      border-radius:15px;
+      padding:9px 11px;
+      min-width:92px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .price-box small{display:block; color:var(--muted); font-weight:900; text-transform:uppercase; font-size:11px; margin-bottom:3px;}
+    .price-box b{font-size:23px; color:var(--red);}
+    .upgrade{font-size:13px; color:var(--muted); font-weight:800; line-height:1.35; display:flex; align-items:center;}
+
+    .verticombo-card{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:20px;
+      align-items:stretch;
+      background:linear-gradient(135deg,var(--red),var(--red2));
+      color:#fff;
+      border-radius:32px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      margin:18px 0 34px;
+    }
+    .verticombo-info{
+      padding:32px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+    .verticombo-info small{
+      display:inline-flex;
+      width:max-content;
+      background:rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.28);
+      border-radius:999px;
+      padding:7px 11px;
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      margin-bottom:12px;
+    }
+    .verticombo-info h4{
+      margin:0;
+      font-size:clamp(36px,5vw,62px);
+      line-height:.95;
+      letter-spacing:-1.8px;
+    }
+    .verticombo-info p{
+      margin:14px 0 0;
+      color:rgba(255,255,255,.9);
+      line-height:1.55;
+      font-weight:700;
+      font-size:17px;
+    }
+    .verticombo-price{
+      margin-top:20px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      align-items:center;
+    }
+    .verticombo-price span{
+      background:#fff;
+      color:var(--red);
+      border-radius:18px;
+      padding:12px 16px;
+      font-size:30px;
+      font-weight:900;
+      line-height:1;
+    }
+    .verticombo-photo img{
+      width:100%;
+      height:100%;
+      min-height:360px;
+      object-fit:cover;
+      display:block;
+      background:#f1dfca;
+    }
+
+    .sides-grid{
+      display:grid;
+      grid-template-columns:repeat(4,minmax(0,1fr));
+      gap:18px;
+    }
+    .side-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:26px;
+      overflow:hidden;
+      box-shadow:var(--shadow2);
+      display:flex;
+      flex-direction:column;
+    }
+    .side-card img{width:100%; height:220px; object-fit:cover; display:block; background:#f1dfca;}
+    .side-card.missing-photo::before{
+      content:'Photo coming soon';
+      height:220px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      text-align:center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(245,198,74,.35), transparent 34%),
+        radial-gradient(circle at 70% 70%, rgba(189,42,24,.18), transparent 32%),
+        linear-gradient(135deg,#fff6e8,#f1dfca);
+      color:var(--red);
+      font-weight:900;
+      letter-spacing:.3px;
+    }
+    .side-body{padding:18px; display:flex; flex-direction:column; gap:10px; flex:1; align-items:flex-start;}
+    .side-body h4{margin:0; font-size:25px; letter-spacing:-.6px;}
+    .side-body p{margin:0; color:var(--muted); line-height:1.5; font-weight:650;}
+    .side-price{margin-top:auto; font-size:25px; font-weight:900; color:var(--red);}
+
+    .extras-panel,.sauces-panel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:28px;
+      padding:24px;
+      box-shadow:var(--shadow2);
+      margin-top:20px;
+    }
+    .extras-panel h4,.sauces-panel h4{margin:0 0 12px; font-size:28px; color:var(--red);}
+    .extras-grid,.sauces-grid{
+      display:grid;
+      grid-template-columns:repeat(5,minmax(0,1fr));
+      gap:14px;
+    }
+    .mini-price{
+      background:#fff8ed;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      text-align:center;
+      font-weight:900;
+      line-height:1.35;
+    }
+    .drink-card{
+      background:#fffaf2;
+      border:1px solid var(--line);
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:var(--shadow2);
+      display:flex;
+      flex-direction:column;
+      min-height:245px;
+    }
+    .drink-card img{
+      width:100%;
+      height:190px;
+      object-fit:cover;
+      display:block;
+      background:#f1dfca;
+    }
+    .drink-body{
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      flex:1;
+    }
+    .drink-body strong{font-size:20px; line-height:1.15; color:var(--brown);}
+    .drink-body span{color:var(--red); font-weight:900; font-size:18px; margin-top:auto;}
+    .mini-price span{display:block; color:var(--red); margin-top:5px;}
+
+    .ingredient-card{
+      background:#fffaf2;
+      border:1px solid var(--line);
+      border-radius:20px;
+      overflow:hidden;
+      box-shadow:var(--shadow2);
+      display:flex;
+      flex-direction:column;
+      min-height:245px;
+    }
+    .ingredient-card img{
+      width:100%;
+      height:150px;
+      object-fit:cover;
+      display:block;
+      background:linear-gradient(135deg,#fff6e8,#f1dfca);
+    }
+    .ingredient-card.missing-photo::before{
+      content:'Photo coming soon';
+      height:150px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:18px;
+      text-align:center;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(245,198,74,.35), transparent 34%),
+        radial-gradient(circle at 70% 70%, rgba(189,42,24,.18), transparent 32%),
+        linear-gradient(135deg,#fff6e8,#f1dfca);
+      color:var(--red);
+      font-weight:900;
+      letter-spacing:.3px;
+    }
+    .ingredient-body{
+      padding:14px;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      flex:1;
+      align-items:flex-start;
+      text-align:left;
+    }
+    .ingredient-body strong{
+      font-size:17px;
+      line-height:1.15;
+      color:var(--brown);
+    }
+    .ingredient-body span{
+      color:var(--red);
+      font-weight:900;
+      font-size:14px;
+      margin-top:auto;
+    }
+    .placeholder-note{
+      margin:10px 0 18px;
+      color:var(--muted);
+      line-height:1.5;
+      font-weight:650;
+      font-size:14px;
+    }
+
+    .catering-wrap{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:20px;
+      align-items:stretch;
+    }
+    .catering-card{
+      background:linear-gradient(135deg,var(--brown),#68291e);
+      color:#fff;
+      border-radius:32px;
+      padding:32px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .catering-card h3{margin:0 0 12px; font-size:42px; line-height:1; letter-spacing:-1.3px;}
+    .catering-card p{color:rgba(255,255,255,.86); line-height:1.6; font-weight:650; margin:0 0 14px;}
+    .catering-list{display:grid; gap:10px; margin:20px 0 0; padding:0; list-style:none;}
+    .catering-list li{display:flex; gap:10px; align-items:flex-start; font-weight:800; color:#fff;}
+    .catering-list li:before{content:'✓'; background:var(--yellow); color:var(--brown); border-radius:50%; width:23px; height:23px; display:grid; place-items:center; flex:0 0 auto;}
+    .catering-photo{
+      min-height:460px;
+      border-radius:32px;
+      overflow:hidden;
+      box-shadow:var(--shadow);
+      border:1px solid var(--line);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.10)),
+        url('https://lh3.googleusercontent.com/d/14Gks5rzjM1rj54tmmhzhfHEjY5IsvPjc=w1600') center/cover no-repeat;
+      position:relative;
+    }
+    .catering-photo::after{
+      content:'Catering';
+      position:absolute;
+      left:16px;
+      bottom:16px;
+      background:rgba(255,255,255,.92);
+      color:var(--red);
+      border:1px solid rgba(255,255,255,.72);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:900;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      box-shadow:0 8px 18px rgba(61,33,21,.12);
+    }
+
+    .delivery-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:18px;
+    }
+    .delivery-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:24px;
+      box-shadow:var(--shadow2);
+    }
+    .delivery-card .big-icon{font-size:38px; margin-bottom:12px;}
+    .delivery-card h3{margin:0 0 10px; font-size:25px;}
+    .delivery-card p{margin:0; color:var(--muted); line-height:1.55; font-weight:650;}
+
+    .app-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:24px;
+      box-shadow:var(--shadow2);
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+      min-height:260px;
+    }
+    .app-logo-wrap{
+      min-height:64px;
+      height:auto;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      overflow:visible;
+      width:100%;
+    }
+    .app-logo{
+      width:100%;
+      max-width:260px;
+      height:auto;
+      max-height:none;
+      display:block;
+      overflow:visible;
+      flex:0 0 auto;
+    }
+    .app-card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+      font-weight:650;
+    }
+    .app-actions{
+      margin-top:auto;
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .btn.app{min-width:175px;}
+    .btn-icon{
+      width:22px;
+      height:22px;
+      object-fit:contain;
+      border-radius:6px;
+      flex:0 0 auto;
+    }
+    .app-logo-small{
+      width:26px;
+      height:26px;
+      object-fit:contain;
+      flex:0 0 auto;
+    }
+
+    .map-card{
+      margin-top:22px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:30px;
+      overflow:hidden;
+      box-shadow:var(--shadow2);
+    }
+    .map-card iframe{
+      width:100%;
+      height:420px;
+      border:0;
+      display:block;
+      background:#f1dfca;
+    }
+    .map-card-body{
+      padding:20px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:16px;
+      flex-wrap:wrap;
+    }
+    .map-card-body h3{
+      margin:0 0 6px;
+      font-size:26px;
+      letter-spacing:-.6px;
+    }
+    .map-card-body p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.45;
+      font-weight:650;
+    }
+
+    .quick-contact-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:16px;
+      margin-top:22px;
+    }
+    .quick-contact-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:20px;
+      box-shadow:var(--shadow2);
+      text-decoration:none;
+      display:flex;
+      align-items:center;
+      gap:14px;
+      transition:.2s ease;
+      min-height:110px;
+    }
+    .quick-contact-card:hover{
+      transform:translateY(-3px);
+      box-shadow:var(--shadow);
+    }
+    .quick-contact-icon{
+      width:46px;
+      height:46px;
+      border-radius:14px;
+      object-fit:cover;
+      background:#fff6e9;
+      border:1px solid var(--line);
+      padding:8px;
+      flex:0 0 auto;
+    }
+    .quick-contact-card strong{
+      display:block;
+      font-size:16px;
+      color:var(--brown);
+      margin-bottom:4px;
+    }
+    .quick-contact-card span{
+      display:block;
+      font-size:14px;
+      color:var(--muted);
+      font-weight:800;
+      line-height:1.3;
+      word-break:break-word;
+    }
+
+    .contact-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:20px;
+    }
+    .contact-card{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:30px;
+      padding:28px;
+      box-shadow:var(--shadow2);
+    }
+    .contact-card.red{
+      background:linear-gradient(135deg,var(--red),var(--red2));
+      color:#fff;
+      border:0;
+    }
+    .contact-card h3{margin:0 0 12px; font-size:34px; letter-spacing:-1px;}
+    .contact-card p{margin:0 0 18px; line-height:1.6; color:var(--muted); font-weight:650;}
+    .contact-card.red p{color:rgba(255,255,255,.9)}
+    .contact-list{display:grid; gap:12px; margin:0; padding:0; list-style:none;}
+    .contact-list a{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+      background:#fff8ed;
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 16px;
+      font-weight:900;
+      line-height:1.25;
+    }
+    .contact-card.red .contact-list a{background:#fff; color:var(--red); border:0;}
+
+    footer{
+      text-align:center;
+      color:var(--muted);
+      font-weight:700;
+      padding:28px 0 10px;
+      line-height:1.5;
+    }
+
+    @media(max-width:1040px){
+      .dogs-grid{grid-template-columns:1fr;}
+      .verticombo-card{grid-template-columns:1fr;}
+      .verticombo-photo img{min-height:300px;}
+      .sides-grid{grid-template-columns:repeat(2,1fr);}
+      .extras-grid,.sauces-grid{grid-template-columns:repeat(3,1fr);}
+    }
+    @media(max-width:820px){
+      .nav-inner{align-items:center; padding:10px 14px;}
+      .nav-links{gap:6px;}
+      .nav-links a:not(.order-btn){display:none;}
+      .nav-links .order-btn{padding:10px 13px; font-size:13px;}
+      .hero{min-height:560px; background-position:center 28%;}
+      .hero-content{padding:28px 18px;}
+      .section-head,.about-grid,.catering-wrap,.contact-grid{grid-template-columns:1fr; display:grid;}
+      .section-head{gap:10px;}
+      .section-head h2{min-width:0;}
+      .section-head p{margin:0; max-width:100%;}
+      .promo-grid,.delivery-grid,.quick-contact-grid{grid-template-columns:1fr;}
+      .map-card iframe{height:330px;}
+      .feature-grid{grid-template-columns:1fr;}
+      .app-card,.delivery-card{min-height:auto;}
+      .app-logo{max-width:230px;}
+      .about-truck-photo{min-height:420px;}
+      .catering-photo{min-height:300px;}
+    }
+    @media(max-width:620px){
+      html, body{width:100%; max-width:100%;}
+      body{font-size:15px;}
+      .page{padding:0 0 42px; width:100%; max-width:100%; height:100vh; overflow-y:auto; overflow-x:hidden;}
+      .page > section:not(.hero), footer{padding-left:14px; padding-right:14px; margin-left:0; margin-right:0; width:100%; max-width:100%;}
+      section{padding:42px 0;}
+      section[id]{scroll-margin-top:78px;}
+      .brand span{display:none;}
+      .brand-logo{width:42px; height:42px;}
+      .hero{border-radius:0; min-height:100vh; background-position:center 28%;}
+      .dog-card{grid-template-columns:1fr; border-radius:22px;}
+      .dog-card img{height:260px;}
+      .sides-grid,.extras-grid,.sauces-grid{grid-template-columns:1fr;}
+      .section-head h2{font-size:36px;}
+      h1{font-size:42px; letter-spacing:-1.4px;}
+      .hero p{font-size:16px;}
+      .btn{width:100%; padding:14px 16px;}
+      .cta-row{width:100%;}
+    }
+  </style>
+</head>
+<body>
+  <div class="top-strip">Our hot dogs are served with high-quality beef & grass-fed beef sausages.</div>
+
+  <header class="navbar">
+    <div class="nav-inner">
+      <a class="brand internal-link" href="javascript:void(0)" data-target="#top" role="button">
+        <img class="brand-logo" src="https://lh3.googleusercontent.com/d/1GhECxK8vBVLO1ye_pR-sBrdEeQqaoQ3h=w400" alt="VertiDog logo">
+        <span>VertiDog Miami</span>
+      </a>
+      <nav class="nav-links" aria-label="Website navigation">
+        <a class="internal-link" href="javascript:void(0)" data-target="#about" role="button">About VertiDog</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#menu" role="button">Menu</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#catering" role="button">Catering</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#delivery" role="button">Delivery</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#location" role="button">Location</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#contact" role="button">Contact</a>
+        <a class="order-btn" href="https://www.ubereats.com/store/vertidog-%E2%80%93-gourmet-vertical-hot-dogs/jxu9BgbsRtmtrfOjdZ-TWA" target="_blank" rel="noopener">Order Now</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page" id="top">
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Vertical hot dogs. Big Miami flavor.</h1>
+        <p>Toasted buns, bold toppings, signature sauces, loaded fries, sweet fries, and a hot-dog format people actually remember.</p>
+        <div class="cta-row">
+          <a class="btn primary internal-link" href="javascript:void(0)" data-target="#menu" role="button">Explore Menu</a>
+          <a class="btn yellow internal-link" href="javascript:void(0)" data-target="#catering" role="button">Book Catering</a>
+          <a class="btn dark internal-link" href="javascript:void(0)" data-target="#contact" role="button">Contact Us</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="section-head">
+        <h2>About VertiDog</h2>
+        <p>A new Miami food-truck concept built around vertical hot dogs served in toasted buns with premium sausages, bold sauces, and serious curb appeal.</p>
+      </div>
+
+      <div class="about-grid">
+        <div class="story-card">
+          <h3>The hot dog reimagined.</h3>
+          <p>VertiDog takes the classic hot dog and flips the experience upright. The bun is toasted, the sausage sits vertically, and the toppings stay inside the bite instead of falling everywhere.</p>
+          <p>It is fast, photogenic, easy to eat, and built for Miami crowds — lunch rushes, beach traffic, events, late-night snacks, pop-ups, and delivery.</p>
+          <div class="cta-row">
+            <a class="btn red internal-link" href="javascript:void(0)" data-target="#menu" role="button">See What We Serve</a>
+          </div>
+
+          <div class="feature-grid" style="margin-top:22px;">
+            <div class="feature feature-horizontal"><img class="feature-icon-img" src="https://lh3.googleusercontent.com/d/13_ko3wGD_NBpT-OxBaOINYi6oh8-e-ZL=w300" alt="Toasted Vertical Bun"><div><h4>Toasted Vertical Bun</h4><p>Crispy outside, soft inside, and made to hold sauce and toppings cleanly.</p></div></div>
+            <div class="feature feature-horizontal"><img class="feature-icon-img" src="https://lh3.googleusercontent.com/d/1QPI309TCfP6QlhaxTp7d1-A0we2MIiuW=w300" alt="Premium Sausages"><div><h4>Premium Sausages</h4><p>High-quality beef with optional grass-fed Polish beef upgrade.</p></div></div>
+            <div class="feature feature-horizontal"><img class="feature-icon-img" src="https://lh3.googleusercontent.com/d/19SA3e-sPSrNxJw1fOD3mX2XPWV5yEzcB=w300" alt="Signature Sauces"><div><h4>Signature Sauces</h4><p>White VertiSauce, Mango Habanero, Garlic & Herbs, Chipotle, BBQ, and more.</p></div></div>
+            <div class="feature feature-horizontal"><img class="feature-icon-img" src="https://lh3.googleusercontent.com/d/1MlYYgAlnOvTs1Y91UEOUvdzU61ejn8ny=w300" alt="Miami Mobile Concept"><div><h4>Miami Mobile Concept</h4><p>Designed for food truck locations, events, catering, and delivery.</p></div></div>
+          </div>
+        </div>
+
+        <div class="about-truck-photo" aria-label="VertiDog truck photo">
+          <img src="https://lh3.googleusercontent.com/d/1hPeR0PHy_m6n3Bnjq1s1rl06SWnspk7H=w2400" alt="VertiDog food truck">
+        </div>
+      </div>
+    </section>
+
+    <section id="menu">
+      <div class="section-head stacked">
+        <h2>Menu</h2>
+        <p>Choose from signature VertiDogs, fries, sweet fries, loaded sides, snacks, sauces, and drinks.</p>
+      </div>
+
+      <div class="menu-nav">
+        <a class="internal-link" href="javascript:void(0)" data-target="#signature-dogs" role="button">Signature VertiDogs</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#combo" role="button">VertiCombo</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#fries" role="button">Fries & Sides</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#loaded" role="button">Make ’Em Loaded</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#sauces" role="button">Sauces</a>
+        <a class="internal-link" href="javascript:void(0)" data-target="#drinks" role="button">Drinks</a>
+      </div>
+
+      <div class="promo-grid">
+        <div class="promo"><small>Combo</small><strong>Save $2.50 with Combo</strong><p>Add fries and a drink to make it a full VertiDog meal.</p></div>
+        <div class="promo"><small>Upgrade</small><strong>Grass-Fed Polish Beef +$1.99</strong><p>Upgrade your sausage for a richer, premium bite.</p></div>
+        <div class="promo"><small>Add-On</small><strong>Add VertiFries +$6.99</strong><p>Crispy fries on the side. Simple, salty, and necessary.</p></div>
+      </div>
+
+      <div class="chapter-title" id="combo"><span>1</span><h3>VertiCombo</h3></div>
+      <div class="verticombo-card">
+        <div class="verticombo-info">
+          <small>Meal Deal</small>
+          <h4>Make it a VertiCombo.</h4>
+          <p>Pair your favorite VertiDog with fries and a drink for the full vertical hot dog experience.</p>
+          <div class="verticombo-price"><span>Save $2.50</span><p style="margin:0;color:rgba(255,255,255,.9);font-weight:900;">Add fries + drink</p></div>
+        </div>
+        <div class="verticombo-photo">
+          <img src="https://lh3.googleusercontent.com/d/1JRsl8JjByTMupSb7iF5i2FAb9xRDIIao=w1600" alt="VertiCombo meal">
+        </div>
+      </div>
+
+      <div class="chapter-title" id="signature-dogs"><span>2</span><h3>Signature VertiDogs</h3></div>
+      <div class="dogs-grid">
+        <article class="dog-card">
+          <img src="https://lh3.googleusercontent.com/d/1XG6-Ij8XgJBrUuSxb1XsFZDOQAg8iDnE=w1000" alt="Original VertiDog">
+          <div class="dog-body"><div class="dog-top"><h4>Original VertiDog™</h4><em class="tag">Crowd Favorite</em></div><p class="dog-desc">Bun + Sausage + Ketchup + White VertiSauce</p><div class="sauce-row"><span class="sauce-pill">White VertiSauce</span><span class="sauce-pill">Ketchup</span></div><div class="price-line"><div class="price-box"><small>Dog</small><b>$11.99</b></div><div class="price-box"><small>Combo</small><b>$19.99</b></div><div class="upgrade">Grass-Fed Polish Beef +$1.99</div></div></div>
+        </article>
+
+        <article class="dog-card">
+          <img src="https://lh3.googleusercontent.com/d/1f-a1MDQXxm8evZm4Gt_37TQgiUEAkKOV=w1000" alt="Cheese VertiDog">
+          <div class="dog-body"><div class="dog-top"><h4>Cheese VertiDog™</h4></div><p class="dog-desc">Bun + Sausage + Cheese + Ketchup + White VertiSauce</p><div class="sauce-row"><span class="sauce-pill">White VertiSauce</span><span class="sauce-pill">Ketchup</span></div><div class="price-line"><div class="price-box"><small>Dog</small><b>$13.99</b></div><div class="price-box"><small>Combo</small><b>$20.99</b></div><div class="upgrade">Grass-Fed Polish Beef +$1.99</div></div></div>
+        </article>
+
+        <article class="dog-card">
+          <img src="https://lh3.googleusercontent.com/d/1yyC27IrDVN2O06HdKD0jc_kTTrETz1i-=w1000" alt="Veggie VertiDog">
+          <div class="dog-body"><div class="dog-top"><h4>Veggie VertiDog™</h4><em class="tag">Plant-Based</em></div><p class="dog-desc">Bun + Veggie Sausage + Garlic & Herbs Special House</p><div class="sauce-row"><span class="sauce-pill">Garlic & Herbs</span></div><div class="price-line"><div class="price-box"><small>Dog</small><b>$14.99</b></div><div class="price-box"><small>Combo</small><b>$22.99</b></div><div class="upgrade">Beyond Sausage</div></div></div>
+        </article>
+
+        <article class="dog-card">
+          <img src="https://lh3.googleusercontent.com/d/1YCnOIDxFUtZdJCIV0O_Yi9JUcehTaA9c=w1000" alt="Seattle VertiDog">
+          <div class="dog-body"><div class="dog-top"><h4>Seattle VertiDog™</h4><em class="tag">Spicy</em></div><p class="dog-desc">Bun + Sausage + Cream Cheese + Fresh Jalapeños + Grilled Onion + White VertiSauce + Chipotle</p><div class="sauce-row"><span class="sauce-pill">White VertiSauce</span><span class="sauce-pill">Chipotle</span></div><div class="price-line"><div class="price-box"><small>Dog</small><b>$14.99</b></div><div class="price-box"><small>Combo</small><b>$22.99</b></div><div class="upgrade">Grass-Fed Polish Beef +$1.99</div></div></div>
+        </article>
+
+        <article class="dog-card">
+          <img src="https://lh3.googleusercontent.com/d/1JMrclweRg4dofzMnOmUvhvpEDGd4sR62=w1000" alt="Pulled Pork VertiDog">
+          <div class="dog-body"><div class="dog-top"><h4>Pulled Pork VertiDog™</h4><em class="tag">Banger</em></div><p class="dog-desc">Bun + Sausage + Pulled Pork + BBQ Sauce</p><div class="sauce-row"><span class="sauce-pill">White VertiSauce</span><span class="sauce-pill">BBQ</span></div><div class="price-line"><div class="price-box"><small>Dog</small><b>$14.99</b></div><div class="price-box"><small>Combo</small><b>$22.99</b></div><div class="upgrade">Grass-Fed Polish Beef +$1.99</div></div></div>
+        </article>
+
+        <article class="dog-card">
+          <img src="https://lh3.googleusercontent.com/d/1Lo_lAfE-oSTxfO1kpDn1_FuyhxFpvVa_=w1000" alt="Tropical VertiDog">
+          <div class="dog-body"><div class="dog-top"><h4>Tropical VertiDog™</h4><em class="tag">Tropical</em></div><p class="dog-desc">Bun + Sausage + Cream Cheese + Tajín Grilled Pineapple + White VertiSauce + Mango Habanero</p><div class="sauce-row"><span class="sauce-pill">White VertiSauce</span><span class="sauce-pill">Mango Habanero</span></div><div class="price-line"><div class="price-box"><small>Dog</small><b>$14.99</b></div><div class="price-box"><small>Combo</small><b>$22.99</b></div><div class="upgrade">Grass-Fed Polish Beef +$1.99</div></div></div>
+        </article>
+
+        <article class="dog-card">
+          <img src="https://lh3.googleusercontent.com/d/1rj9XE10pel46l0TaQxCyXLUHACm-_dxk=w1000" alt="Pink Velvet VertiDog">
+          <div class="dog-body"><div class="dog-top"><h4>Pink Velvet VertiDog™</h4></div><p class="dog-desc">Bun + Sausage + Cream Cheese + Blush Beet Slaw + Garlic & Herbs Special House</p><div class="sauce-row"><span class="sauce-pill">Garlic & Herbs</span><span class="sauce-pill">Cream Cheese</span></div><div class="price-line"><div class="price-box"><small>Dog</small><b>$14.99</b></div><div class="price-box"><small>Combo</small><b>$22.99</b></div><div class="upgrade">Grass-Fed Polish Beef +$1.99</div></div></div>
+        </article>
+      </div>
+
+      <div class="chapter-title" id="fries"><span>3</span><h3>Fries & Sides</h3></div>
+      <div class="sides-grid">
+        <article class="side-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1cE9_18CAnXMeD6_M3oY-qPyeV_BnQ3II=w1000" alt="VertiFries"><div class="side-body"><h4>VertiFries™</h4><p>Crispy fries.</p><div class="side-price">$6.99</div></div></article>
+        <article class="side-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1jkelG2G17yik9RgVu-R11PdBpvtCGHps=w1000" alt="Sweet VertiFries"><div class="side-body"><h4>Sweet VertiFries™</h4><p>Sweet potato fries.</p><div class="side-price">$8.99</div></div></article>
+        <article class="side-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1CZS_DPXPfCEfIe2f9XgkYkKo-azLp36K=w1000" alt="VertiFries Supreme"><div class="side-body"><span class="tag">Best Seller</span><h4>VertiFries™ Supreme</h4><p>Fries + Sausage / Veggie Sausage</p><div class="side-price">$9.99 / $12.99</div></div></article>
+        <article class="side-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1H9TscmaTMOqZc_MMoykIilNT-EIuRRPj=w1000" alt="Sweet VertiFries Supreme"><div class="side-body"><h4>Sweet VertiFries™ Supreme</h4><p>Sweet potato fries + Sausage / Veggie Sausage</p><div class="side-price">$11.99 / $14.99</div></div></article>
+        <article class="side-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/15-EafzH2DXdZexQRq1CDF5AOsitjLt2u=w1000" alt="VertiPickles"><div class="side-body"><span class="tag">Chef’s Kiss</span><h4>VertiPickles x3</h4><p>Pickles in cheddar + Garlic & Herbs Special House</p><div class="side-price">$7.99</div></div></article>
+        <article class="side-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1IfLOJkEVgNq832sAkwypW6xbfBS3zxbw=w1000" alt="Garlic Croutons"><div class="side-body"><h4>Garlic Croutons</h4><p>White croutons + garlic & herbs seasoning</p><div class="side-price">$4.99</div></div></article>
+        <article class="side-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 650'%3E%3Cdefs%3E%3ClinearGradient id='bg' x1='0' x2='1' y1='0' y2='1'%3E%3Cstop stop-color='%23fff6e8'/%3E%3Cstop offset='1' stop-color='%23f1dfca'/%3E%3C/linearGradient%3E%3Cfilter id='s' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeDropShadow dx='0' dy='18' stdDeviation='18' flood-color='%233d2115' flood-opacity='.18'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='900' height='650' fill='url(%23bg)'/%3E%3Ccircle cx='705' cy='125' r='120' fill='%23f5c64a' opacity='.28'/%3E%3Ccircle cx='160' cy='560' r='140' fill='%23bd2a18' opacity='.12'/%3E%3Cg filter='url(%23s)'%3E%3Cellipse cx='450' cy='520' rx='190' ry='34' fill='%233d2115' opacity='.16'/%3E%3Cpath d='M325 335h250l-58 210H383z' fill='%23c88a46'/%3E%3Cpath d='M345 360h210l-47 164H392z' fill='%23e2ad65'/%3E%3Cpath d='M325 335h250l-22 42H347z' fill='%23a9652e'/%3E%3Ccircle cx='365' cy='285' r='88' fill='%23fff7dc'/%3E%3Ccircle cx='455' cy='250' r='102' fill='%23ffffff'/%3E%3Ccircle cx='535' cy='295' r='86' fill='%23fff1c7'/%3E%3Cpath d='M333 286c50-28 100-36 157-9 43 20 74 18 112-6' fill='none' stroke='%23d7b177' stroke-width='18' stroke-linecap='round' opacity='.45'/%3E%3Cpath d='M330 289c24 10 48 12 75 3 28-9 50-8 74 8 34 23 72 22 111 1' fill='none' stroke='%23b98348' stroke-width='9' stroke-linecap='round' opacity='.7'/%3E%3C/g%3E%3Ctext x='450' y='105' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='54' font-weight='900' fill='%23bd2a18'%3ESalty Ice Cream%3C/text%3E%3Ctext x='450' y='158' text-anchor='middle' font-family='Arial, Helvetica, sans-serif' font-size='28' font-weight='700' fill='%237a5d50'%3Ewith dulce de leche%3C/text%3E%3C/svg%3E" alt="Salty Ice Cream"><div class="side-body"><h4>Salty Ice Cream</h4><p>With dulce de leche.</p><div class="side-price">$6.99</div></div></article>
+      </div>
+
+      <div class="extras-panel" id="loaded">
+        <h4>Make ’Em Loaded</h4>
+        <div class="extras-grid">
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1B45hA9XbUADI50HvM-xemKiqKLDQraYh=w1000" alt="Grilled Onion"><div class="ingredient-body"><strong>Grilled Onion</strong><span>+$1.00</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1rj7X9X5ro6ynpZI39AxQmUBUXyjm690E=w1000" alt="Jalapeños"><div class="ingredient-body"><strong>Jalapeños</strong><span>+$1.00</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1Pehx5zCh4o1BTNlJsK6SeIW6nCnWdoEI=w1000" alt="Cream Cheese"><div class="ingredient-body"><strong>Cream Cheese</strong><span>+$1.50</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1q-QDcDQbwo2fjR6vsXqDZEw4i58aZTFd=w1000" alt="Cheddar Cheese"><div class="ingredient-body"><strong>Cheddar Cheese</strong><span>+$2.00</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1MHIagUwLVnimK2UgNMxpcCzRrFtKhdR-=w1000" alt="Pulled Pork"><div class="ingredient-body"><strong>Pulled Pork</strong><span>+$2.50</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/17Ox5RR92pxdOGAwjB3GZ6YYOFJkTIfll=w1000" alt="Blush Beet Slaw"><div class="ingredient-body"><strong>Blush Beet Slaw</strong><span>+$2.00</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1WDadpPg1O3SfYUXIUG28X8vzG0PyK6kL=w1000" alt="Tajín Grilled Pineapple"><div class="ingredient-body"><strong>Tajín Grilled Pineapple</strong><span>+$2.00</span></div></div>
+        </div>
+      </div>
+
+      <div class="sauces-panel" id="sauces">
+        <h4>Sauces</h4>
+        <div class="sauces-grid">
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1lBqk2ghQ9nJAOsbE5mfS3H3kl0wAnH7U=w1000" alt="Ketchup"><div class="ingredient-body"><strong>Ketchup</strong><span>Included</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1aJulmx5aEVcFxje8cB8fjquCcFokV7u5=w1000" alt="Mayo"><div class="ingredient-body"><strong>Mayo</strong><span>Included</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1n-XhsaqZr1ykS0un8O7SvkkARF1Pp5iv=w1000" alt="Mustard"><div class="ingredient-body"><strong>Mustard</strong><span>Included</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1honM1cJyOmASB8bQubuNmSztNECOS8HH=w1000" alt="White VertiSauce"><div class="ingredient-body"><strong>White VertiSauce</strong><span>+$0.50</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/171p665i6HokZz92mOabrbBIsYhCQRgX1=w1000" alt="BBQ"><div class="ingredient-body"><strong>BBQ</strong><span>+$0.50</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1ZFJbI_6tO6Hc8YTIk3l2QrRa4z2_5P8Q=w1000" alt="Mango Habanero"><div class="ingredient-body"><strong>Mango Habanero</strong><span>+$0.50</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/10EYlCKKI47xghN5pilXp_jVnBkPac8zz=w1000" alt="Honey Mustard"><div class="ingredient-body"><strong>Honey Mustard</strong><span>+$0.50</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/1eRbz6k5mZInrGNHidsAlIVEDB1LtuCsz=w1000" alt="Garlic & Herbs"><div class="ingredient-body"><strong>Garlic & Herbs</strong><span>+$1.00</span></div></div>
+          <div class="ingredient-card"><img onerror="this.style.display='none'; this.parentElement.classList.add('missing-photo');" src="https://lh3.googleusercontent.com/d/17e2Pzc2x0ZU1TH-hovN8Sw_BrsOWrmCg=w1000" alt="Chipotle"><div class="ingredient-body"><strong>Chipotle</strong><span>+$0.50</span></div></div>
+        </div>
+      </div>
+
+      <div class="extras-panel" id="drinks">
+        <h4>Drinks</h4>
+        <div class="extras-grid">
+          <div class="drink-card"><img src="https://lh3.googleusercontent.com/d/1vAgxCmIY5oDns02YY_ZPxceUjv84YkzY=w1000" alt="Soft Drinks"><div class="drink-body"><strong>Soft Drinks</strong><span>$3.50</span></div></div>
+          <div class="drink-card"><img src="https://lh3.googleusercontent.com/d/1AleECk-ToLXYit6d6tzBHYMMikV9B42c=w1000" alt="Water"><div class="drink-body"><strong>Water</strong><span>$2.50</span></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="catering">
+      <div class="section-head stacked">
+        <h2>Catering</h2>
+        <p>Bring VertiDog to private events, office lunches, parties, pop-ups, community events, and brand activations.</p>
+      </div>
+      <div class="catering-wrap">
+        <div class="catering-card">
+          <h3>Make your event vertical.</h3>
+          <p>VertiDog catering is built for speed, fun, and a memorable food experience. Guests get a complete hot-dog concept that looks great, eats clean, and moves fast.</p>
+          <ul class="catering-list">
+            <li>Private parties and birthdays</li>
+            <li>Office lunches and corporate events</li>
+            <li>Pop-ups, markets, and community events</li>
+            <li>Custom menu packages available</li>
+          </ul>
+          <div class="cta-row"><a class="btn yellow" href="mailto:info@verti.dog?subject=VertiDog%20Catering%20Request">Request Catering</a></div>
+        </div>
+        <div class="catering-photo" role="img" aria-label="VertiDog catering photo"></div>
+      </div>
+    </section>
+
+    <section id="delivery">
+      <div class="section-head stacked">
+        <h2>Delivery</h2>
+        <p>VertiDog is live on delivery apps. Order directly through Uber Eats or DoorDash and get vertical hot dogs delivered.</p>
+      </div>
+      <div class="delivery-grid">
+        <div class="app-card">
+          <div class="app-logo-wrap" aria-label="Uber Eats logo">
+            <svg class="app-logo" viewBox="0 0 360 86" role="img" aria-labelledby="ubereats-title" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet">
+              <title id="ubereats-title">Uber Eats</title>
+              <text x="0" y="62" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="800" fill="#000000">Uber</text>
+              <text x="148" y="62" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="800" fill="#06C167">Eats</text>
+            </svg>
+          </div>
+          <p>Order VertiDog directly on Uber Eats and get gourmet vertical hot dogs delivered.</p>
+          <div class="app-actions"><a class="btn red app" href="https://www.ubereats.com/store/vertidog-%E2%80%93-gourmet-vertical-hot-dogs/jxu9BgbsRtmtrfOjdZ-TWA" target="_blank" rel="noopener"><span class="app-logo-small" aria-hidden="true">🛵</span> Order on Uber Eats</a></div>
+        </div>
+
+        <div class="app-card">
+          <div class="app-logo-wrap" aria-label="DoorDash logo">
+            <svg class="app-logo" viewBox="0 0 520 90" role="img" aria-labelledby="doordash-title" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMinYMid meet">
+              <title id="doordash-title">DoorDash</title>
+              <g fill="#EB1700">
+                <path d="M18 24h78c30 0 52 18 52 42s-22 42-52 42H18c-9 0-16-7-16-16s7-16 16-16h74c8 0 14-4 14-10s-6-10-14-10H18C9 56 2 49 2 40s7-16 16-16z" transform="scale(.78) translate(0,-8)"/>
+                <text x="128" y="62" font-family="Arial, Helvetica, sans-serif" font-size="58" font-weight="800">DoorDash</text>
+              </g>
+            </svg>
+          </div>
+          <p>Check out VertiDog on DoorDash and order online for quick delivery.</p>
+          <div class="app-actions"><a class="btn red app" href="https://www.doordash.com/store/42398345?utm_source=mx_share&aw=PqpOCmDLS7tZ-rdp" target="_blank" rel="noopener"><span class="app-logo-small" aria-hidden="true">🚪</span> Order on DoorDash</a></div>
+        </div>
+
+        <div class="delivery-card"><div class="big-icon">📍</div><h3>Food Truck Pick-Up</h3><p>Follow VertiDog for current truck locations, pop-ups, events, and special drops around Miami.</p><div class="cta-row"><a class="btn dark" href="https://instagram.com/verti.dog" target="_blank" rel="noopener"><img class="btn-icon" src="https://lh3.googleusercontent.com/d/17v4NwbCElLrywZ-iYwRKeYrVp-vjgj41=w200" alt="Instagram icon"> Follow Locations</a></div></div>
+      </div>
+    </section>
+
+    <section id="location">
+      <div class="section-head">
+        <h2>Location</h2>
+        <p>Find VertiDog on Google Maps and get directions to the truck.</p>
+      </div>
+      <div class="map-card">
+        <iframe
+          title="VertiDog Google Maps location"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          src="https://www.google.com/maps?q=25.8892797,-80.1718954&z=17&output=embed">
+        </iframe>
+        <div class="map-card-body">
+          <div>
+            <h3>VertiDog – Gourmet Vertical Hot Dogs</h3>
+            <p>Open the map for directions, hours, and live location details.</p>
+          </div>
+          <a class="btn red" href="https://maps.app.goo.gl/mSUgtNCTCDKHDAo49" target="_blank" rel="noopener">Open in Google Maps</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="section-head">
+        <h2>Contact</h2>
+        <p>Questions, catering, delivery, event requests, or where to find the truck — reach VertiDog here.</p>
+      </div>
+
+      <div class="quick-contact-grid">
+        <a class="quick-contact-card" href="mailto:info@verti.dog">
+          <img class="quick-contact-icon" src="https://lh3.googleusercontent.com/d/1TpQJ6tSC-6gFfyzIcuO0vgs5XG2u5AVU=w200" alt="Email icon">
+          <div><strong>Email</strong><span>info@verti.dog</span></div>
+        </a>
+        <a class="quick-contact-card" href="https://instagram.com/verti.dog" target="_blank" rel="noopener">
+          <img class="quick-contact-icon" src="https://lh3.googleusercontent.com/d/17v4NwbCElLrywZ-iYwRKeYrVp-vjgj41=w200" alt="Instagram icon">
+          <div><strong>Instagram</strong><span>@verti.dog</span></div>
+        </a>
+        <a class="quick-contact-card" href="tel:3059003647">
+          <img class="quick-contact-icon" src="https://lh3.googleusercontent.com/d/1aPaKYybVxrvfSUEtDyT2vtPXt_czH2d6=w200" alt="Phone icon">
+          <div><strong>Phone</strong><span>305-900-DOGS</span></div>
+        </a>
+      </div>
+
+      <div class="contact-grid" style="margin-top:20px; grid-template-columns:1fr;">
+        <div class="contact-card red">
+          <h3>Talk to VertiDog</h3>
+          <p>Follow the truck or contact VertiDog for catering, event requests, and general questions.</p>
+          <ul class="contact-list">
+            <li><a href="mailto:info@verti.dog"><img class="btn-icon" src="https://lh3.googleusercontent.com/d/1TpQJ6tSC-6gFfyzIcuO0vgs5XG2u5AVU=w200" alt="Email icon"> Email: info@verti.dog</a></li>
+            <li><a href="tel:3059003647"><img class="btn-icon" src="https://lh3.googleusercontent.com/d/1aPaKYybVxrvfSUEtDyT2vtPXt_czH2d6=w200" alt="Phone icon"> Phone: 305-900-DOGS (3647)</a></li>
+            <li><a href="https://instagram.com/verti.dog" target="_blank" rel="noopener"><img class="btn-icon" src="https://lh3.googleusercontent.com/d/17v4NwbCElLrywZ-iYwRKeYrVp-vjgj41=w200" alt="Instagram icon"> Instagram: @verti.dog</a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> VertiDog LLC • Miami, FL<br>
+      Vertical hot dogs. Toasted buns. Bold sauces.
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Internal menu navigation for Google Sites embeds.
+    // Uses data-target instead of hash href because Google Sites can hijack # links inside embeds.
+    function scrollToSection(targetId){
+      if (!targetId) return;
+      var target = document.querySelector(targetId);
+      var scroller = document.querySelector('.page');
+      if (!target || !scroller) return;
+
+      var navOffset = window.innerWidth <= 620 ? 72 : 84;
+      var targetTop = target.getBoundingClientRect().top - scroller.getBoundingClientRect().top + scroller.scrollTop - navOffset;
+
+      scroller.scrollTo({ top: targetTop, behavior: 'smooth' });
+    }
+
+    document.querySelectorAll('[data-target]').forEach(function(link){
+      link.addEventListener('click', function(event){
+        event.preventDefault();
+        event.stopPropagation();
+        scrollToSection(this.getAttribute('data-target'));
+      });
+    });
+  </script>
+</body>
+</html>
